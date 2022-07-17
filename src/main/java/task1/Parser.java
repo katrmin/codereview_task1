@@ -15,26 +15,17 @@ public class Parser {
             if (ch != '.') tmp = tmp + ch;
             else {
                 switch (count) {
-                    case 0:
-                        parsedNumber = Long.parseLong(tmp) << 24;
-                        break;
-                    case 1:
-                        parsedNumber = Long.parseLong(tmp) << 16;
-                        break;
-                    case 2:
-                        parsedNumber = Long.parseLong(tmp) << 8;
-                        break;
-                    case 3:
-                        parsedNumber = Long.parseLong(tmp);
-                        break;
-                    default:
-                        throw new IllegalArgumentException("Invalid format string");
+                    case 0 -> parsedNumber = Long.parseLong(tmp) << 24;
+                    case 1 -> parsedNumber += Long.parseLong(tmp) << 16;
+                    case 2 -> parsedNumber += Long.parseLong(tmp) << 8;
+                    default -> throw new IllegalArgumentException("Invalid format string");
                 }
                 tmp = "";
                 count++;
             }
         }
-        System.out.println(String.format("Parsed number : %s", parsedNumber));
+        parsedNumber += Long.parseLong(tmp);
+        System.out.printf("Parsed number : %s%n", parsedNumber);
         return parsedNumber;
     }
 }
