@@ -34,7 +34,7 @@ public class Parser {
                 count++;
             }
         }
-        System.out.println(String.format("Parsed number: %s", parsedNumber));
+        System.out.println(String.format("Parsed number : %s", parsedNumber));
         return parsedNumber;
     }
 }
