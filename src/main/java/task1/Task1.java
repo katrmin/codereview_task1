@@ -27,7 +27,8 @@ public class Task1 {
         task.perform(args[0]);
     }
 
-    public void perform(String arg) {
+    public long perform(String arg) {
+        long count = 0L;
         try (BufferedReader reader =
                      new BufferedReader(new FileReader(arg))) {
             String tmp;
@@ -41,11 +42,13 @@ public class Task1 {
                 this.putExistenceToArray(index, parsedNumber);
             }
 
-            long count = this.getCount(this.readIps1, this.readIps2, this.readIps3, this.readIps4);
+            count = this.getCount(this.readIps1, this.readIps2, this.readIps3, this.readIps4);
             System.out.printf("Количество уникальных адресов равно: %s%n", count);
+
         } catch (IOException e) {
             e.printStackTrace();
         }
+        return count;
     }
 
     private int getIndex(long parsedNumber) {
