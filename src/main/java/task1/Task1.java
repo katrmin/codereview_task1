@@ -13,7 +13,7 @@ public class Task1 {
     private boolean[] readIps4;
 
     //Необходимо всего 4 294 967 296 элементов массива
-    Task1() {
+    public Task1() {
         readIps1 = new boolean[1073741824];
         readIps2 = new boolean[1073741824];
         readIps3 = new boolean[1073741824];
