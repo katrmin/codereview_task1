@@ -7,6 +7,10 @@ import java.io.FileReader;
 import java.io.IOException;
 
 public class Task1 {
+    public static final int ARRAY_SIZE = 1073741824;
+    public static final long THIRD_ARRAY_THRESHOLD = ARRAY_SIZE * 3L;
+    public static final long SECOND_ARRAY_THRESHOLD = ARRAY_SIZE * 2L;
+
     private boolean[] readIps1;
     private boolean[] readIps2;
     private boolean[] readIps3;
@@ -14,14 +18,13 @@ public class Task1 {
 
     //Необходимо всего 4 294 967 296 элементов массива
     public Task1() {
-        readIps1 = new boolean[1073741824];
-        readIps2 = new boolean[1073741824];
-        readIps3 = new boolean[1073741824];
-        readIps4 = new boolean[1073741824];
+        readIps1 = new boolean[ARRAY_SIZE];
+        readIps2 = new boolean[ARRAY_SIZE];
+        readIps3 = new boolean[ARRAY_SIZE];
+        readIps4 = new boolean[ARRAY_SIZE];
     }
 
     public static void main(String @NotNull [] args) {
-
         System.out.println(args[0]);
         Task1 task = new Task1();
         task.perform(args[0]);
@@ -32,17 +35,13 @@ public class Task1 {
         try (BufferedReader reader =
                      new BufferedReader(new FileReader(arg))) {
             String tmp;
-            int index;
-
             while ((tmp = reader.readLine()) != null) {
                 System.out.println(tmp);
-                long parsedNumber = new Parser(tmp).parseToNumber();
-                index = getIndex(parsedNumber);
-                System.out.printf("Index: %d%n", index);
-                this.putExistenceToArray(index, parsedNumber);
+                long parsedNumber = Parser.parseToNumber(tmp);
+                this.putExistenceToArray(parsedNumber);
             }
 
-            count = this.getCount(this.readIps1, this.readIps2, this.readIps3, this.readIps4);
+            count = this.getCount();
             System.out.printf("Количество уникальных адресов равно: %s%n", count);
 
         } catch (IOException e) {
@@ -51,33 +50,34 @@ public class Task1 {
         return count;
     }
 
-    private int getIndex(long parsedNumber) {
-        return (int) (parsedNumber % 1073741824L);
+    private int getArrayIndex(long parsedNumber) {
+        return (int) (parsedNumber % ARRAY_SIZE);
     }
 
-    private long getCount(boolean[] readIps1, boolean[] readIps2, boolean[] readIps3, boolean[] readIps4) {
+    private long getCount() {
         long count = 0L;
-        for (boolean b : readIps1) {
-            if (b) count += 1;
-        }
-        for (boolean b : readIps2) {
-            if (b) count += 1;
-        }
-        for (boolean b : readIps3) {
-            if (b) count += 1;
-        }
-        for (boolean b : readIps4) {
+        count = getCount(count, readIps1);
+        count = getCount(count, readIps2);
+        count = getCount(count, readIps3);
+        count = getCount(count, readIps4);
+        return count;
+    }
+
+    private long getCount(long count, boolean[] array) {
+        for (boolean b : array) {
             if (b) count += 1;
         }
         return count;
     }
 
-    private void putExistenceToArray(int index, long parsedNumber) {
-        if (parsedNumber < 1073741824L) {
+    private void putExistenceToArray(long parsedNumber) {
+        var index = getArrayIndex(parsedNumber);
+        System.out.printf("Index of the array: %d%n", index);
+        if (parsedNumber < ARRAY_SIZE) {
             readIps1[index] = true;
-        } else if (parsedNumber < 2147483648L) {
+        } else if (parsedNumber < SECOND_ARRAY_THRESHOLD) {
             readIps2[index] = true;
-        } else if (parsedNumber < 3221225472L) {
+        } else if (parsedNumber < THIRD_ARRAY_THRESHOLD) {
             readIps3[index] = true;
         } else {
             readIps4[index] = true;

@@ -1,37 +1,38 @@
 package task1;
 
 public class Parser {
-    private char[] value;
+    public static final int THREE_BYTES = 24;
+    public static final int TWO_BYTES = 16;
+    public static final int ONE_BYTE = 8;
 
-    public Parser(String inputString) {
-        value = inputString.toCharArray();
-    }
+    public static long parseToNumber(String inputString) {
+        char[] charValueOfNumberStringWithDots = inputString.toCharArray();
 
-    public long parseToNumber() {
         long parsedNumber = 0L;
-        String tmp = "";
+        String numberString = "";
         int count = 0;
-        for (char ch : value) {
-            if (ch != '.') tmp = tmp + ch;
+
+        for (char symbol : charValueOfNumberStringWithDots) {
+            if (symbol != '.') numberString = numberString + symbol;
             else {
                 switch (count) {
                     case 0:
-                        parsedNumber = Long.parseLong(tmp) << 24;
+                        parsedNumber = Long.parseLong(numberString) << THREE_BYTES;
                         break;
                     case 1:
-                        parsedNumber += Long.parseLong(tmp) << 16;
+                        parsedNumber += Long.parseLong(numberString) << TWO_BYTES;
                         break;
                     case 2:
-                        parsedNumber += Long.parseLong(tmp) << 8;
+                        parsedNumber += Long.parseLong(numberString) << ONE_BYTE;
                         break;
                     default:
                         throw new IllegalArgumentException("Invalid format string");
                 }
-                tmp = "";
+                numberString = "";
                 count++;
             }
         }
-        parsedNumber += Long.parseLong(tmp);
+        parsedNumber += Long.parseLong(numberString);
         System.out.printf("Parsed number : %s%n", parsedNumber);
         return parsedNumber;
     }
