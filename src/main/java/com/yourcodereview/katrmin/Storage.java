@@ -13,13 +13,14 @@ public class Storage {
     private boolean[] readIps4;
 
     public Storage() {
+        //Необходимо всего 4 294 967 296 элементов массива
         readIps1 = new boolean[ARRAY_SIZE];
         readIps2 = new boolean[ARRAY_SIZE];
         readIps3 = new boolean[ARRAY_SIZE];
         readIps4 = new boolean[ARRAY_SIZE];
     }
 
-    public int getArrayIndex(long parsedNumber) {
+    private int getArrayIndex(long parsedNumber) {
         return (int) (parsedNumber % ARRAY_SIZE);
     }
 

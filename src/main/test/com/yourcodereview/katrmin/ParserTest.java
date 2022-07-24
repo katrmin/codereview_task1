@@ -29,7 +29,7 @@ class ParserTest {
 
     @Test
     void failParseToNumberDueInvalidAddressLength() {
-        String toTest = "123.123.123.123.123";
+        String toTest = "123.123.123";
         assertThrowsExactly(IllegalArgumentException.class, () -> Parser.parseToNumber(toTest));
     }
 }

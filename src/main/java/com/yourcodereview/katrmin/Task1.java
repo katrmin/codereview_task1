@@ -7,25 +7,20 @@ import java.io.FileReader;
 import java.io.IOException;
 
 public class Task1 {
-    public static final int ARRAY_SIZE = 1073741824;
-    public static final long THIRD_ARRAY_THRESHOLD = ARRAY_SIZE * 3L;
-    public static final long SECOND_ARRAY_THRESHOLD = ARRAY_SIZE * 2L;
-
     private Storage storage;
 
-    //Необходимо всего 4 294 967 296 элементов массива
     public Task1() {
         storage = new Storage();
     }
 
-    public static void main(String @NotNull [] args) {
+    public static void main(String @NotNull [] args) throws IOException {
         System.out.println(args[0]);
         Task1 task = new Task1();
         task.perform(args[0]);
     }
 
-    public long perform(String arg) {
-        long count = 0L;
+    public long perform(String arg) throws IOException {
+        long count;
         try (BufferedReader reader =
                      new BufferedReader(new FileReader(arg))) {
             String ipString;
@@ -39,6 +34,8 @@ public class Task1 {
 
         } catch (IOException e) {
             e.printStackTrace();
+            throw e;
+
         }
         return count;
     }
