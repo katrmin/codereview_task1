@@ -1,4 +1,4 @@
-package task1;
+package com.yourcodereview.katrmin;
 
 import org.jetbrains.annotations.NotNull;
 

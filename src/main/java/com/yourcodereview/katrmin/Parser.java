@@ -1,4 +1,4 @@
-package task1;
+package com.yourcodereview.katrmin;
 
 public class Parser {
     public static final int THREE_BYTES = 24;
@@ -31,6 +31,9 @@ public class Parser {
                 numberString = "";
                 count++;
             }
+        }
+        if (count < 3) {
+            throw new IllegalArgumentException("Invalid length of IP-address");
         }
         parsedNumber += Long.parseLong(numberString);
         System.out.printf("Parsed number : %s%n", parsedNumber);
